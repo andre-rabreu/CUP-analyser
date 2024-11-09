@@ -2,12 +2,12 @@ package ast.expr;
 
 import ast.CodeVisitor;
 
-public class GTExpr implements BoolExpr
+public class LTExpr implements BoolExpr
 {
     public Expr e1;
     public Expr e2;
 
-    public GTExpr(Expr e1, Expr e2) {
+    public LTExpr(Expr e1, Expr e2) {
         this.e1 = e1;
         this.e2 = e2;
     }

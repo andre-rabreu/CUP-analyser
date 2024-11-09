@@ -2,25 +2,11 @@ package ast;
 
 import java.util.HashMap;
 
-import ast.command.AssignmentCommand;
-import ast.command.IfCommand;
-import ast.command.PrintCommand;
-import ast.command.WhileCommand;
-import ast.expr.CosExpr;
-import ast.expr.DivExpr;
-import ast.expr.IdExpr;
-import ast.expr.ModExpr;
-import ast.expr.DoubleConstExpr;
-import ast.expr.ExpExpr;
-import ast.expr.GTExpr;
-import ast.expr.MulExpr;
-import ast.expr.NegatedExpr;
-import ast.expr.PiExpr;
-import ast.expr.SinExpr;
-import ast.expr.SubExpr;
-import ast.expr.SumExpr;
+import ast.command.*;
+import ast.expr.*;
 
-public class Interpreter implements CodeVisitor {
+public class Interpreter implements CodeVisitor
+{
     // symbolTable é a tabela de símbolos
     private static HashMap<String, IdExpr> symbolTable = new HashMap<>();
 
@@ -97,8 +83,43 @@ public class Interpreter implements CodeVisitor {
     }
 
     @Override
+    public Boolean visit(LTExpr e) {
+        Double v1 = e.e1.accept(this);
+        Double v2 = e.e2.accept(this);
+        return v1 < v2;
+    }
+
+    @Override
+    public Boolean visit(GTEExpr e) {
+        Double v1 = e.e1.accept(this);
+        Double v2 = e.e2.accept(this);
+        return v1 >= v2;
+    }
+
+    @Override
+    public Boolean visit(LTEExpr e) {
+        Double v1 = e.e1.accept(this);
+        Double v2 = e.e2.accept(this);
+        return v1 <= v2;
+    }
+
+    @Override
+    public Boolean visit(EQExpr e) {
+        Double v1 = e.e1.accept(this);
+        Double v2 = e.e2.accept(this);
+        return v1.equals(v2);
+    }
+
+    @Override
+    public Boolean visit(NEQExpr e) {
+        Double v1 = e.e1.accept(this);
+        Double v2 = e.e2.accept(this);
+        return !v1.equals(v2);
+    }
+
+    @Override
     public void visit(PrintCommand c) {
-        System.out.println(">>> " + c.expr.accept(this));
+        System.out.println(">> " + c.expr.accept(this));
     }
 
     @Override
@@ -109,11 +130,12 @@ public class Interpreter implements CodeVisitor {
     }
 
     @Override
-    public void visit(IfCommand ifc) {
-        if( ifc.boolExpr.accept(this) ){
-            ifc.command.accept(this);
+    public void visit(IfCommand command) {
+        if(command.boolExpr.accept(this)) {
+            command.trueCommand.accept(this);
+        } else {
+            if(command.falseCommand != null) command.falseCommand.accept(this);
         }
-        
     }
 
     @Override

@@ -25,6 +25,7 @@ non terminal IfCommand          if_command;
 non terminal WhileCommand       while_command;
 
 // Precedência e associatividade dos operadores
+precedence nonassoc ELSE;
 precedence nonassoc IF;
 precedence nonassoc ASSIGN;
 precedence left GT;
@@ -33,63 +34,45 @@ precedence left TIMES, DIVIDE, MOD;
 precedence right EXP;
 precedence left UMINUS;
 
-
 // Regras da gramática
 program ::= command_list
     ;
-
 
 command_list ::= command_part command_list
     | command_part
     ;
 
 command_part ::= command:c
-        {:
-            c.accept(new Interpreter());
-        :}
+        {: c.accept(new Interpreter()); :}
     | error
     ;
 
 command ::= assignment_command:a SEMI
-        {:
-            RESULT = a;
-        :}
+        {: RESULT = a; :}
     | print_command:p SEMI
-        {: 
-            RESULT = p;
-        :}
+        {: RESULT = p; :}
     | if_command:ifc
-        {:
-            RESULT = ifc;
-        :}
+        {: RESULT = ifc; :}
     | while_command:w
-        {:
-            RESULT = w;
-        :}
+        {: RESULT = w; :}
     ;
 
 while_command ::= WHILE LPAREN bool_expr:e RPAREN command:c
-        {:
-            RESULT = new WhileCommand(e, c);
-        :}
+        {: RESULT = new WhileCommand(e, c); :}
     ;
 
 assignment_command ::= ID:id ASSIGN expr:e
-        {:
-            RESULT = new AssignmentCommand(id, e);
-        :}
+        {: RESULT = new AssignmentCommand(id, e); :}
     ;
 
 print_command ::= PRINT LPAREN expr:e RPAREN
-        {:
-            RESULT = new PrintCommand(e);
-        :}
+        {: RESULT = new PrintCommand(e); :}
     ;
 
 if_command ::= IF LPAREN bool_expr:e RPAREN command:c
-        {:
-            RESULT = new IfCommand(e, c);
-        :} 
+        {: RESULT = new IfCommand(e, c); :}
+    | IF LPAREN bool_expr:e RPAREN command:c1 ELSE command:c2
+        {: RESULT = new IfCommand(e, c1, c2); :}
     ;
 
 expr ::= expr:e1 PLUS expr:e2
@@ -103,7 +86,7 @@ expr ::= expr:e1 PLUS expr:e2
     | expr:e1 MOD expr:e2
         {: RESULT = new ModExpr(e1, e2); :}
     | expr:e1 EXP expr:e2
-            {: RESULT = new ExpExpr(e1, e2); :}
+        {: RESULT = new ExpExpr(e1, e2); :}
     | MINUS expr:e 
         {: RESULT = new NegatedExpr(e); :} %prec UMINUS
     | LPAREN expr:e RPAREN 
@@ -111,26 +94,25 @@ expr ::= expr:e1 PLUS expr:e2
     | NUMBER:n 
         {: RESULT = new DoubleConstExpr(n); :}
     | ID:id 
-        {: 
-            RESULT = new IdExpr(id);
-        :}
+        {: RESULT = new IdExpr(id); :}
     | SIN LPAREN expr:e RPAREN 
-        {:
-            RESULT = new SinExpr(e);
-        :}
+        {: RESULT = new SinExpr(e); :}
     | COS LPAREN expr:e RPAREN
-        {:
-            RESULT = new CosExpr(e);
-        :}
+        {: RESULT = new CosExpr(e); :}
     | PI:pi 
-        {: 
-            RESULT = new PiExpr(pi);
-        :}
+        {: RESULT = new PiExpr(pi); :}
     ;
 
 bool_expr ::= expr:e1 GT expr:e2
-        {:
-            RESULT = new GTExpr(e1, e2);
-        :}
+        {: RESULT = new GTExpr(e1, e2); :}
+    | expr:e1 GTE expr:e2
+        {: RESULT = new GTEExpr(e1, e2); :}
+    | expr:e1 LT expr:e2
+        {: RESULT = new LTExpr(e1, e2); :}
+    | expr:e1 LTE expr:e2
+        {: RESULT = new LTEExpr(e1, e2); :}
+    | expr:e1 EQ expr:e2
+        {: RESULT = new EQExpr(e1, e2); :}
+    | expr:e1 NEQ expr:e2
+        {: RESULT = new NEQExpr(e1, e2); :}
     ;
-

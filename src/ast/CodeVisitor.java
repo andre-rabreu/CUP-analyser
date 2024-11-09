@@ -1,22 +1,7 @@
 package ast;
 
-import ast.expr.SumExpr;
-import ast.expr.MulExpr;
-import ast.expr.SubExpr;
-import ast.command.AssignmentCommand;
-import ast.command.IfCommand;
-import ast.command.PrintCommand;
-import ast.command.WhileCommand;
-import ast.expr.CosExpr;
-import ast.expr.DivExpr;
-import ast.expr.IdExpr;
-import ast.expr.DoubleConstExpr;
-import ast.expr.ExpExpr;
-import ast.expr.GTExpr;
-import ast.expr.NegatedExpr;
-import ast.expr.PiExpr;
-import ast.expr.ModExpr;
-import ast.expr.SinExpr;
+import ast.expr.*;
+import ast.command.*;
 
 public interface CodeVisitor {
     public Double visit(SumExpr e);
@@ -44,6 +29,16 @@ public interface CodeVisitor {
     public Double visit(PiExpr e);
 
     public Boolean visit(GTExpr e);
+
+    public Boolean visit(LTExpr e);
+
+    public Boolean visit(GTEExpr e);
+
+    public Boolean visit(LTEExpr e);
+
+    public Boolean visit(EQExpr e);
+
+    public Boolean visit(NEQExpr e);
 
     public void visit(PrintCommand c);
 
