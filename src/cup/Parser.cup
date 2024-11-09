@@ -8,8 +8,8 @@ import ast.command.*;
 
 // Definição dos terminais
 terminal            SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, PRINT;
-terminal            UMINUS, LPAREN, RPAREN, ASSIGN, SIN, COS, EXP;
-terminal            GT, IF, WHILE;
+terminal            UMINUS, LPAREN, RPAREN, LBRACE, RBRACE, ASSIGN, SIN, COS, EXP;
+terminal            GT, GTE, LT, LTE, EQ, NEQ, IF, ELSE, WHILE;
 terminal Double     NUMBER;
 terminal String     ID;
 terminal Double     PI;
