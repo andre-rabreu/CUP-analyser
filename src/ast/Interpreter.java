@@ -280,4 +280,11 @@ public class Interpreter implements CodeVisitor
             cl = cl.commandList;
         } while(cl != null);
     }
+
+    @Override
+    public void visit(CommandBlock cb) {
+        symbolTable.push();
+        cb.getCommandList().accept(this);
+        symbolTable.pop();
+    }
 }

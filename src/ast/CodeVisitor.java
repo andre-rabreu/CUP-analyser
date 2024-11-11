@@ -50,4 +50,6 @@ public interface CodeVisitor
     public void visit(WhileCommand w);
 
     public void visit(CommandList cl);
+
+    public void visit(CommandBlock cb);
 }
