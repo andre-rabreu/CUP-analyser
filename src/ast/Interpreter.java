@@ -1,14 +1,12 @@
 package ast;
 
-import java.util.HashMap;
-
 import ast.command.*;
 import ast.expr.*;
 
 public class Interpreter implements CodeVisitor
 {
     // symbolTable é a tabela de símbolos
-    private static HashMap<String, IdExpr> symbolTable = new HashMap<>();
+    private static SymbolTable symbolTable = new SymbolTable();
 
     @Override
     public Const visit(SumExpr e) {
