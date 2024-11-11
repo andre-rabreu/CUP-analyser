@@ -28,7 +28,7 @@ import java_cup.runtime.*;
 ws = [\ \t\f\r\n]
 number = \d+(\.\d+)?(["E""e"]["+""-"]?\d+)?
 identifier = [A-Za-z][A-Za-z0-9]*
-string = (\")(.)*(\")
+string = (\")([^\"])*(\")
 
 %%
 ";"         { return symbol(sym.SEMI); }

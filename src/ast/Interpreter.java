@@ -12,30 +12,66 @@ public class Interpreter implements CodeVisitor
 
     @Override
     public Const visit(SumExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(c1 + c2, Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            return new Const((Double)c1.getValue() + (Double)c2.getValue(), Type.NUMBER);
+        }
+        else if(c1.getType() == Type.STRING || c2.getType() == Type.STRING) {
+            return new Const(c1.getValue().toString() + c2.getValue().toString(), Type.STRING);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(SubExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(c1 - c2, Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            return new Const((Double)c1.getValue() - (Double)c2.getValue(), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(MulExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(c1 * c2, Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            return new Const((Double)c1.getValue() * (Double)c2.getValue(), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(DivExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(c1 / c2, Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            if((Double)c2.getValue() == 0) {
+                System.err.println("Erro: divisão por zero!");
+                return new Const(null, null);
+                // return null;
+            }
+            return new Const((Double)c1.getValue() / (Double)c2.getValue(), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
@@ -55,34 +91,74 @@ public class Interpreter implements CodeVisitor
 
     @Override
     public Const visit(NegatedExpr e) {
-        Double value = (Double)e.expr.accept(this).getValue();
-        return new Const(-value, Type.NUMBER);
+        Const value = e.expr.accept(this);
+        if(value.getType() == Type.NUMBER) {
+            return new Const(-(Double)value.getValue(), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(ModExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(c1 % c2, Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            if((Double)c2.getValue() == 0) {
+                System.err.println("Erro: divisão por zero!");
+                return new Const(null, null);
+                // return null;
+            }
+            return new Const((Double)c1.getValue() % (Double)c2.getValue(), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(ExpExpr e) {
-        Double c1 = (Double)e.e1.accept(this).getValue();
-        Double c2 = (Double)e.e2.accept(this).getValue();
-        return new Const(Math.pow(c1, c2), Type.NUMBER);
+        Const c1 = e.e1.accept(this);
+        Const c2 = e.e2.accept(this);
+        if(c1.getType() == Type.NUMBER && c2.getType() == Type.NUMBER) {
+            return new Const(Math.pow((Double)c1.getValue(), (Double)c2.getValue()), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(SinExpr e) {
-        Double value = (Double)e.expr.accept(this).getValue();
-        return new Const(Math.sin(value), Type.NUMBER);
+        Const value = e.expr.accept(this);
+        if(value.getType() == Type.NUMBER) {
+            return new Const(Math.sin((Double)value.getValue()), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
     public Const visit(CosExpr e) {
-        Double value = (Double)e.expr.accept(this).getValue();
-        return new Const(Math.cos(value), Type.NUMBER);
+        Const value = e.expr.accept(this);
+        if(value.getType() == Type.NUMBER) {
+            return new Const(Math.cos((Double)value.getValue()), Type.NUMBER);
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return new Const(null, null);
+            // return null;
+        }
     }
 
     @Override
@@ -92,44 +168,80 @@ public class Interpreter implements CodeVisitor
 
     @Override
     public Boolean visit(GTExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return v1 > v2;
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return (Double)v1.getValue() > (Double)v2.getValue();
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
     public Boolean visit(LTExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return v1 < v2;
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return (Double)v1.getValue() < (Double)v2.getValue();
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
     public Boolean visit(GTEExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return v1 >= v2;
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return (Double)v1.getValue() >= (Double)v2.getValue();
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
     public Boolean visit(LTEExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return v1 <= v2;
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return (Double)v1.getValue() <= (Double)v2.getValue();
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
     public Boolean visit(EQExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return v1.equals(v2);
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return ((Double)v1.getValue()).equals((Double)v2.getValue());
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
     public Boolean visit(NEQExpr e) {
-        Double v1 = (Double)e.e1.accept(this).getValue();
-        Double v2 = (Double)e.e2.accept(this).getValue();
-        return !v1.equals(v2);
+        Const v1 = e.e1.accept(this);
+        Const v2 = e.e2.accept(this);
+        if(v1.getType() == Type.NUMBER && v2.getType() == Type.NUMBER) {
+            return !((Double)v1.getValue()).equals((Double)v2.getValue());
+        }
+        else {
+            System.err.println("Erro: tipos incompatíveis!");
+            return false;
+        }
     }
 
     @Override
