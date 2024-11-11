@@ -48,4 +48,6 @@ public interface CodeVisitor
     public void visit(IfCommand ifc);
 
     public void visit(WhileCommand w);
+
+    public void visit(CommandList cl);
 }

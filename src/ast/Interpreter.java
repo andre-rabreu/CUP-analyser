@@ -271,4 +271,13 @@ public class Interpreter implements CodeVisitor
             b = w.boolExpr.accept(this);
         }
     }
+
+    @Override
+    public void visit(CommandList commandList) {
+        CommandList cl = commandList;
+        do {
+            cl.command.accept(this);
+            cl = cl.commandList;
+        } while(cl != null);
+    }
 }

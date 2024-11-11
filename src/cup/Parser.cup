@@ -16,10 +16,11 @@ terminal String     ID, STRING;
 terminal Double     PI;
 
 // Definição dos não-terminais
-non terminal            program, command_list, command_part;
+non terminal            program;
 non terminal Expr       expr;
 non terminal BoolExpr   bool_expr;
-non terminal Command    command;
+non terminal Command    command, command_part;
+non terminal CommandList command_list, command_block;
 non terminal PrintCommand       print_command;
 non terminal AssignmentCommand  assignment_command;
 non terminal IfCommand          if_command;
@@ -36,16 +37,18 @@ precedence right EXP;
 precedence left UMINUS;
 
 // Regras da gramática
-program ::= command_list
+program ::= command_list:cl
+        {: cl.accept(new Interpreter()); :}
     ;
 
-command_list ::= command_part command_list
-    | command_part
+command_list ::= command_part:p command_list:cl
+        {: RESULT = new CommandList(p, cl); :}
+    | command_part:p
+        {: RESULT = new CommandList(p); :}
     ;
 
 command_part ::= command:c
-        {: c.accept(new Interpreter()); :}
-    | error
+        {: RESULT = c; :}
     ;
 
 command ::= assignment_command:a SEMI
@@ -56,6 +59,12 @@ command ::= assignment_command:a SEMI
         {: RESULT = ifc; :}
     | while_command:w
         {: RESULT = w; :}
+    | command_block:cb
+        {: RESULT = cb; :}
+    ;
+
+command_block ::= LBRACE command_list:cl RBRACE
+        {: RESULT = cl; :}
     ;
 
 while_command ::= WHILE LPAREN bool_expr:e RPAREN command:c
