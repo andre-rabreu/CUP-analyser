@@ -5,13 +5,14 @@ import java.util.HashMap;
 import ast.expr.*;
 import ast.Interpreter;
 import ast.command.*;
+import ast.*;
 
 // Definição dos terminais
 terminal            SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, PRINT;
 terminal            UMINUS, LPAREN, RPAREN, LBRACE, RBRACE, ASSIGN, SIN, COS, EXP;
 terminal            GT, GTE, LT, LTE, EQ, NEQ, IF, ELSE, WHILE;
 terminal Double     NUMBER;
-terminal String     ID;
+terminal String     ID, STRING;
 terminal Double     PI;
 
 // Definição dos não-terminais
@@ -92,7 +93,9 @@ expr ::= expr:e1 PLUS expr:e2
     | LPAREN expr:e RPAREN 
         {: RESULT = e; :}
     | NUMBER:n 
-        {: RESULT = new DoubleConstExpr(n); :}
+        {: RESULT = new ConstExpr(new Const(n, Type.NUMBER)); :}
+    | STRING:s 
+        {: RESULT = new ConstExpr(new Const(s, Type.STRING)); :}
     | ID:id 
         {: RESULT = new IdExpr(id); :}
     | SIN LPAREN expr:e RPAREN 

@@ -1,8 +1,10 @@
 package ast.expr;
 
 import ast.CodeVisitor;
+import ast.Const;
 
-public class SumExpr implements Expr {
+public class SumExpr implements Expr
+{
     public Expr e1, e2;
 
     public SumExpr(Expr e1, Expr e2) {
@@ -11,8 +13,7 @@ public class SumExpr implements Expr {
     }
 
     @Override
-    public Double accept(CodeVisitor v) {
+    public Const accept(CodeVisitor v) {
         return v.visit(this);
     }
-
 }

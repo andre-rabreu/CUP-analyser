@@ -27,10 +27,11 @@ public interface sym {
   public static final int ID = 28;
   public static final int GTE = 19;
   public static final int EXP = 17;
+  public static final int STRING = 29;
   public static final int NUMBER = 27;
   public static final int EOF = 0;
   public static final int DIVIDE = 6;
-  public static final int PI = 29;
+  public static final int PI = 30;
   public static final int MINUS = 4;
   public static final int PRINT = 8;
   public static final int error = 1;
@@ -68,6 +69,7 @@ public interface sym {
   "WHILE",
   "NUMBER",
   "ID",
+  "STRING",
   "PI"
   };
 }

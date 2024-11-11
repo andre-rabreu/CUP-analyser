@@ -3,7 +3,8 @@ package ast.command;
 import ast.CodeVisitor;
 import ast.expr.Expr;
 
-public class PrintCommand implements Command {
+public class PrintCommand implements Command
+{
     public Expr expr;
 
     public PrintCommand(Expr expr) {
@@ -14,5 +15,4 @@ public class PrintCommand implements Command {
     public void accept(CodeVisitor v) {
         v.visit(this);
     }
-
 }

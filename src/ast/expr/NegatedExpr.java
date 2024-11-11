@@ -1,8 +1,10 @@
 package ast.expr;
 
 import ast.CodeVisitor;
+import ast.Const;
 
-public class NegatedExpr implements Expr{
+public class NegatedExpr implements Expr
+{
     public Expr expr;
 
     public NegatedExpr(Expr e) {
@@ -10,7 +12,7 @@ public class NegatedExpr implements Expr{
     }
 
     @Override
-    public Double accept(CodeVisitor v) {
+    public Const accept(CodeVisitor v) {
         return v.visit(this);
     }
 }

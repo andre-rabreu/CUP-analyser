@@ -3,8 +3,8 @@ package ast.command;
 import ast.CodeVisitor;
 import ast.expr.Expr;
 
-
-public class AssignmentCommand implements Command {
+public class AssignmentCommand implements Command
+{
     public String id;
     public Expr expr;
     
@@ -17,5 +17,4 @@ public class AssignmentCommand implements Command {
     public void accept(CodeVisitor v) {
         v.visit(this);
     }
-
 }

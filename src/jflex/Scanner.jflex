@@ -57,6 +57,7 @@ string = (\")(.)*(\")
 "print"     { return symbol(sym.PRINT); }
 "PI"        { return symbol(sym.PI, Math.PI); }
 {number}    { return symbol(sym.NUMBER, Double.valueOf(yytext())); }
+{string}    { return symbol(sym.STRING, yytext().substring(1, yytext().length()-1)); }
 {identifier} { return symbol(sym.ID, yytext()); }
 {ws}        {/* Ignore */}
 .           { throw new Error("Simbolo inválido detectado: \"" + yycharat(0) +

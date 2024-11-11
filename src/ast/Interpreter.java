@@ -11,29 +11,37 @@ public class Interpreter implements CodeVisitor
     private static HashMap<String, IdExpr> symbolTable = new HashMap<>();
 
     @Override
-    public Double visit(SumExpr e) {
-        return e.e1.accept(this) + e.e2.accept(this);
+    public Const visit(SumExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(c1 + c2, Type.NUMBER);
     }
 
     @Override
-    public Double visit(SubExpr e) {
-        return e.e1.accept(this) - e.e2.accept(this);
+    public Const visit(SubExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(c1 - c2, Type.NUMBER);
     }
 
     @Override
-    public Double visit(MulExpr e) {
-        return e.e1.accept(this) * e.e2.accept(this);
+    public Const visit(MulExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(c1 * c2, Type.NUMBER);
     }
 
     @Override
-    public Double visit(DivExpr e) {
-        return e.e1.accept(this) / e.e2.accept(this);
+    public Const visit(DivExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(c1 / c2, Type.NUMBER);
     }
 
     @Override
-    public Double visit(IdExpr e) {
+    public Const visit(IdExpr e) {
         IdExpr idExpr = Interpreter.symbolTable.get(e.name);
-        if( idExpr == null ) {
+        if(idExpr == null) {
                 System.err.println("Erro: variável \"" + e.name +
                         "\" não inicializada!");
         }
@@ -41,90 +49,97 @@ public class Interpreter implements CodeVisitor
     }
 
     @Override
-    public Double visit(DoubleConstExpr e) {
+    public Const visit(ConstExpr e) {
         return e.value;
     }
 
     @Override
-    public Double visit(NegatedExpr e) {
-        return -e.expr.accept(this);
+    public Const visit(NegatedExpr e) {
+        Double value = (Double)e.expr.accept(this).getValue();
+        return new Const(-value, Type.NUMBER);
     }
 
     @Override
-    public Double visit(ModExpr e) {
-        return e.e1.accept(this) % e.e2.accept(this);
+    public Const visit(ModExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(c1 % c2, Type.NUMBER);
     }
 
     @Override
-    public Double visit(ExpExpr e) {
-        return Math.pow(e.e1.accept(this), e.e2.accept(this));
+    public Const visit(ExpExpr e) {
+        Double c1 = (Double)e.e1.accept(this).getValue();
+        Double c2 = (Double)e.e2.accept(this).getValue();
+        return new Const(Math.pow(c1, c2), Type.NUMBER);
     }
 
     @Override
-    public Double visit(SinExpr e) {
-        return Math.sin(e.expr.accept(this));
+    public Const visit(SinExpr e) {
+        Double value = (Double)e.expr.accept(this).getValue();
+        return new Const(Math.sin(value), Type.NUMBER);
     }
 
     @Override
-    public Double visit(CosExpr e) {
-        return Math.cos(e.expr.accept(this));
+    public Const visit(CosExpr e) {
+        Double value = (Double)e.expr.accept(this).getValue();
+        return new Const(Math.cos(value), Type.NUMBER);
     }
 
     @Override
-    public Double visit(PiExpr e) {
-        return e.value;
+    public Const visit(PiExpr e) {
+        return new Const(e.value, Type.NUMBER);
     }
 
     @Override
     public Boolean visit(GTExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return v1 > v2;
     }
 
     @Override
     public Boolean visit(LTExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return v1 < v2;
     }
 
     @Override
     public Boolean visit(GTEExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return v1 >= v2;
     }
 
     @Override
     public Boolean visit(LTEExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return v1 <= v2;
     }
 
     @Override
     public Boolean visit(EQExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return v1.equals(v2);
     }
 
     @Override
     public Boolean visit(NEQExpr e) {
-        Double v1 = e.e1.accept(this);
-        Double v2 = e.e2.accept(this);
+        Double v1 = (Double)e.e1.accept(this).getValue();
+        Double v2 = (Double)e.e2.accept(this).getValue();
         return !v1.equals(v2);
     }
 
     @Override
     public void visit(PrintCommand c) {
-        System.out.println(">> " + c.expr.accept(this));
+        System.out.println(">> " + c.expr.accept(this).getValue());
     }
 
     @Override
     public void visit(AssignmentCommand c) {
-        Double value = c.expr.accept(this);
+        Const value = c.expr.accept(this);
         IdExpr idExpr = new IdExpr(c.id, value);
         Interpreter.symbolTable.put(c.id, idExpr);
     }

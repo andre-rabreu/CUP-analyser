@@ -1,8 +1,10 @@
 package ast.expr;
 
 import ast.CodeVisitor;
+import ast.Const;
 
-public class SinExpr implements Expr{
+public class SinExpr implements Expr
+{
     public Expr expr;
 
     public SinExpr(Expr e) {
@@ -10,7 +12,7 @@ public class SinExpr implements Expr{
     }
 
     @Override
-    public Double accept(CodeVisitor v) {
+    public Const accept(CodeVisitor v) {
         return v.visit(this);
     }
 }
