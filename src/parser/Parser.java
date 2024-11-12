@@ -8,7 +8,6 @@ package parser;
 import java_cup.runtime.*;
 import java.util.HashMap;
 import ast.expr.*;
-import ast.Interpreter;
 import ast.command.*;
 import ast.*;
 import java_cup.runtime.XMLElement;
@@ -523,7 +522,7 @@ class CUP$Parser$actions {
 		int e2left = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int e2right = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Expr e2 = (Expr)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new MulExpr(e1, e2);; 
+		 RESULT = new MultExpr(e1, e2);; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expr",1, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;

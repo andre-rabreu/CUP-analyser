@@ -5,9 +5,17 @@ import ast.Const;
 
 public class ConstExpr implements Expr
 {
-    public Const value;
+    private Const value;
 
     public ConstExpr(Const value) {
+        this.value = value;
+    }
+
+    public Const getValue() {
+        return value;
+    }
+
+    public void setValue(Const value) {
         this.value = value;
     }
 

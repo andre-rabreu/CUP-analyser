@@ -5,5 +5,5 @@ import ast.Const;
 
 public interface Expr
 {
-    public Const accept(CodeVisitor v);
+    public Const accept(CodeVisitor codeVisitor);
 }

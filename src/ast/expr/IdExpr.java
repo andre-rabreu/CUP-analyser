@@ -5,8 +5,8 @@ import ast.Const;
 
 public class IdExpr implements Expr
 {
-    public String name;
-    public Const value;
+    private String name;
+    private Const value;
 
     public IdExpr(String name) {
         this(name, null);
@@ -14,6 +14,22 @@ public class IdExpr implements Expr
 
     public IdExpr(String name, Const value) {
         this.name = name;
+        this.value = value;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Const getValue() {
+        return value;
+    }
+
+    public void setValue(Const value) {
         this.value = value;
     }
 

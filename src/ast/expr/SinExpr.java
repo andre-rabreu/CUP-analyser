@@ -5,9 +5,17 @@ import ast.Const;
 
 public class SinExpr implements Expr
 {
-    public Expr expr;
+    private Expr expr;
 
     public SinExpr(Expr e) {
+        this.expr = e;
+    }
+
+    public Expr getExpr() {
+        return expr;
+    }
+
+    public void setExpr(Expr e) {
         this.expr = e;
     }
 

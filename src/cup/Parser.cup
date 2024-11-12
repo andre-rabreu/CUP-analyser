@@ -3,29 +3,28 @@ package parser;
 import java_cup.runtime.*;
 import java.util.HashMap;
 import ast.expr.*;
-import ast.Interpreter;
 import ast.command.*;
 import ast.*;
 
 // Definição dos terminais
-terminal            SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, PRINT;
-terminal            UMINUS, LPAREN, RPAREN, LBRACE, RBRACE, ASSIGN, SIN, COS, EXP;
-terminal            GT, GTE, LT, LTE, EQ, NEQ, IF, ELSE, WHILE;
-terminal Double     NUMBER;
-terminal String     ID, STRING;
-terminal Double     PI;
+terminal SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, PRINT;
+terminal UMINUS, LPAREN, RPAREN, LBRACE, RBRACE, ASSIGN, SIN, COS, EXP;
+terminal GT, GTE, LT, LTE, EQ, NEQ, IF, ELSE, WHILE;
+terminal Double NUMBER;
+terminal String ID, STRING;
+terminal Double PI; // does order affect the precedence?
 
 // Definição dos não-terminais
-non terminal            program;
-non terminal Expr       expr;
-non terminal BoolExpr   bool_expr;
-non terminal Command    command, command_part;
+non terminal program;
+non terminal Expr expr;
+non terminal BoolExpr bool_expr;
+non terminal Command command, command_part;
 non terminal CommandList command_list;
-non terminal CommandBlock     command_block;
-non terminal PrintCommand       print_command;
-non terminal AssignmentCommand  assignment_command;
-non terminal IfCommand          if_command;
-non terminal WhileCommand       while_command;
+non terminal CommandBlock command_block;
+non terminal PrintCommand print_command;
+non terminal AssignmentCommand assignment_command;
+non terminal IfCommand if_command;
+non terminal WhileCommand while_command;
 
 // Precedência e associatividade dos operadores
 precedence nonassoc ELSE;
@@ -91,7 +90,7 @@ expr ::= expr:e1 PLUS expr:e2
     | expr:e1 MINUS expr:e2
         {: RESULT = new SubExpr(e1, e2); :}
     | expr:e1 TIMES expr:e2
-        {: RESULT = new MulExpr(e1, e2);; :}
+        {: RESULT = new MultExpr(e1, e2);; :}
     | expr:e1 DIVIDE expr:e2
         {: RESULT = new DivExpr(e1, e2); :}
     | expr:e1 MOD expr:e2

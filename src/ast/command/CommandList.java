@@ -4,8 +4,8 @@ import ast.CodeVisitor;
 
 public class CommandList implements Command
 {
-    public CommandList commandList;
-    public Command command;
+    private CommandList commandList;
+    private Command command;
 
     public CommandList(Command command, CommandList commandList) {
         this.commandList = commandList; 

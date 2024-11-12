@@ -5,10 +5,14 @@ import ast.Const;
 
 public class PiExpr implements Expr
 {
-    public Double value;
+    private Double value;
 
     public PiExpr(Double value) {
         this.value = value;
+    }
+
+    public Double getValue() {
+        return value;
     }
 
     @Override

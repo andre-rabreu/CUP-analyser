@@ -1,16 +1,15 @@
-x = 1;
+x = 5;
+y = 2;
 
-if (x>4) {
-    print(1);
-    print(2);
+if(x > y) {
+    print(x + " maior que " + y);
 }
 else {
-    print(3);
-    print(4);
+    print(x + " menor que " + y);
 }
 
-{
-    a = "hello!";
-    print(a);
+while(x >= y) {
+    print("x: " + x);
+    x = x - 1;
 }
-print(a);
+print("Pi = " + PI);

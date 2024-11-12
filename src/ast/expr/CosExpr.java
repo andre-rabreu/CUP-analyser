@@ -5,10 +5,18 @@ import ast.Const;
 
 public class CosExpr implements Expr
 {
-    public Expr expr;
+    private Expr expr;
 
     public CosExpr(Expr e) {
         this.expr = e;
+    }
+
+    public Expr getExpr() {
+        return expr;
+    }
+
+    public void setExpr(Expr expr) {
+        this.expr = expr;
     }
 
     @Override

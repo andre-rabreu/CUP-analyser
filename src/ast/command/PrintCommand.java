@@ -5,9 +5,17 @@ import ast.expr.Expr;
 
 public class PrintCommand implements Command
 {
-    public Expr expr;
+    private Expr expr;
 
     public PrintCommand(Expr expr) {
+        this.expr = expr;
+    }
+
+    public Expr getExpr() {
+        return expr;
+    }
+
+    public void setExpr(Expr expr) {
         this.expr = expr;
     }
 
