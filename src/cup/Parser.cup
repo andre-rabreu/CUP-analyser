@@ -1,4 +1,4 @@
-// Especificação do parser CUP
+// Speficication of CUP parser
 package parser;
 import java_cup.runtime.*;
 import java.util.HashMap;
@@ -6,7 +6,7 @@ import ast.expr.*;
 import ast.command.*;
 import ast.*;
 
-// Definição dos terminais
+// Definition of terminal symbols
 terminal SEMI, PLUS, MINUS, TIMES, DIVIDE, MOD, PRINT;
 terminal UMINUS, LPAREN, RPAREN, LBRACE, RBRACE, ASSIGN, SIN, COS, EXP;
 terminal GT, GTE, LT, LTE, EQ, NEQ, IF, ELSE, WHILE;
@@ -14,7 +14,7 @@ terminal Double NUMBER;
 terminal String ID, STRING;
 terminal Double PI; // does order affect the precedence?
 
-// Definição dos não-terminais
+// Definition of non-terminal symbols
 non terminal program;
 non terminal Expr expr;
 non terminal BoolExpr bool_expr;
@@ -26,7 +26,7 @@ non terminal AssignmentCommand assignment_command;
 non terminal IfCommand if_command;
 non terminal WhileCommand while_command;
 
-// Precedência e associatividade dos operadores
+// Precedence and associativity of operators
 precedence nonassoc ELSE;
 precedence nonassoc IF;
 precedence nonassoc ASSIGN;
@@ -36,7 +36,7 @@ precedence left TIMES, DIVIDE, MOD;
 precedence right EXP;
 precedence left UMINUS;
 
-// Regras da gramática
+// Grammar rules
 program ::= command_list:cl
         {: cl.accept(new Interpreter()); :}
     ;

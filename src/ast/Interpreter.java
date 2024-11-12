@@ -22,7 +22,7 @@ public class Interpreter implements CodeVisitor
             return new Const(augend.getValue().toString() + addend.getValue().toString(), Type.STRING);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '+' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -37,7 +37,7 @@ public class Interpreter implements CodeVisitor
             return new Const((Double)minuend.getValue() - (Double)subtrahend.getValue(), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '-' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -52,7 +52,7 @@ public class Interpreter implements CodeVisitor
             return new Const((Double)multiplicand.getValue() * (Double)multiplier.getValue(), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '*' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -66,14 +66,14 @@ public class Interpreter implements CodeVisitor
         if(dividend.getType() == Type.NUMBER && divisor.getType() == Type.NUMBER) {
             Double divisorValue = (Double)divisor.getValue();
             if(divisorValue == 0) {
-                System.err.println("Erro: divisão por zero!");
+                System.err.println("Error: division by zero!");
                 return new Const(null, null);
                 // return null;
             }
             return new Const((Double)dividend.getValue() / divisorValue, Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '/' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -85,7 +85,7 @@ public class Interpreter implements CodeVisitor
         IdExpr _idExpr = Interpreter.symbolTable.get(idExprName);
 
         if(_idExpr == null) {
-            System.err.println("Erro: variável \"" + idExprName + "\" não inicializada!");
+            System.err.println("Error: variable \"" + idExprName + "\" not initialized!");
         }
         return _idExpr.getValue();
     }
@@ -103,7 +103,7 @@ public class Interpreter implements CodeVisitor
             return new Const(-(Double)value.getValue(), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible type for negation!");
             return new Const(null, null);
             // return null;
         }
@@ -117,14 +117,14 @@ public class Interpreter implements CodeVisitor
         if(dividend.getType() == Type.NUMBER && divisor.getType() == Type.NUMBER) {
             Double divisorValue = (Double)divisor.getValue();
             if(divisorValue == 0) {
-                System.err.println("Erro: divisão por zero!");
+                System.err.println("Error: division by zero!");
                 return new Const(null, null);
                 // return null;
             }
             return new Const((Double)dividend.getValue() % divisorValue, Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '%' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -139,7 +139,7 @@ public class Interpreter implements CodeVisitor
             return new Const(Math.pow((Double)base.getValue(), (Double)exponent.getValue()), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '**' operator!");
             return new Const(null, null);
             // return null;
         }
@@ -153,7 +153,7 @@ public class Interpreter implements CodeVisitor
             return new Const(Math.sin((Double)expr.getValue()), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible type for sin!");
             return new Const(null, null);
             // return null;
         }
@@ -167,7 +167,7 @@ public class Interpreter implements CodeVisitor
             return new Const(Math.cos((Double)expr.getValue()), Type.NUMBER);
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible type for cos!");
             return new Const(null, null);
             // return null;
         }
@@ -187,7 +187,7 @@ public class Interpreter implements CodeVisitor
             return (Double)left.getValue() > (Double)right.getValue();
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '>' comparator!");
             return false;
         }
     }
@@ -201,7 +201,7 @@ public class Interpreter implements CodeVisitor
             return (Double)left.getValue() < (Double)right.getValue();
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '<' comparator!");
             return false;
         }
     }
@@ -215,7 +215,7 @@ public class Interpreter implements CodeVisitor
             return (Double)left.getValue() >= (Double)right.getValue();
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '>=' comparator!");
             return false;
         }
     }
@@ -229,7 +229,7 @@ public class Interpreter implements CodeVisitor
             return (Double)left.getValue() <= (Double)right.getValue();
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '<=' comparator!");
             return false;
         }
     }
@@ -243,7 +243,7 @@ public class Interpreter implements CodeVisitor
             return ((Double)left.getValue()).equals((Double)right.getValue());
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '==' comparator!");
             return false;
         }
     }
@@ -257,7 +257,7 @@ public class Interpreter implements CodeVisitor
             return !((Double)left.getValue()).equals((Double)right.getValue());
         }
         else {
-            System.err.println("Erro: tipos incompatíveis!");
+            System.err.println("Error: incompatible types for '!=' comparator!");
             return false;
         }
     }

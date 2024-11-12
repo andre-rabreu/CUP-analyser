@@ -1,6 +1,6 @@
-// Arquivo para o scanner a ser utilizado
+// File for the scanner to be used by the parser
 package parser;
-// Importar classes do cup - classe Symbol
+// // Importing classes from CUP - class Symbol
 import java_cup.runtime.*;
 
 %%
@@ -12,11 +12,8 @@ import java_cup.runtime.*;
 %column
 
 %{
-    // type é a classe do token
-    // yyline e yycolumn são variáveis reservadas
-    // do JFlex para armazenar a linha e a coluna
-    // de um token encontrado na entrada (precisa
-    //  usar %line e %column)
+    // type is the token class yyline and yycolumn are reserved variables of JFlex to store
+    // the line and column of a token found on input (needs to use %line and %column)
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -60,6 +57,5 @@ string = (\")([^\"])*(\")
 {string}    { return symbol(sym.STRING, yytext().substring(1, yytext().length()-1)); }
 {identifier} { return symbol(sym.ID, yytext()); }
 {ws}        {/* Ignore */}
-.           { throw new Error("Simbolo inválido detectado: \"" + yycharat(0) +
-              "\" ( linha: " +  yyline + ", coluna: " + yycolumn + ")"); }
-
+.           { throw new Error("Invalid symbol detected: \"" + yycharat(0) +
+              "\" ( line: " +  yyline + ", column: " + yycolumn + ")"); }

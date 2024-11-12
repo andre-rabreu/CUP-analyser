@@ -1,9 +1,9 @@
 <project name="SimpleExpr" 
          default="dist" basedir=".">
     <description>
-        Arquivo Ant para construir um analisador sintático simples.
+        Ant file to build a simple syntax analyser.
     </description>
-    <!-- propriedades globais -->
+    <!-- global properties -->
     <property name="mainClass" value="parser.Main" />
     <property name="src" location="src" />
     <property name="tools" location="tools" />
@@ -11,60 +11,60 @@
     <property name="cup" location="src/cup" />
     <property name="build" location="build" />
     <property name="dist" location="dist" />
-    <!-- Tarefa para chamar a ferramenta JFlex -->
+    <!-- Task to call the tool JFlex -->
     <taskdef name="jflex" classname="jflex.anttask.JFlexTask"
              classpath="${tools}/jflex-full-1.9.1.jar" />
-    <!-- Tarefa para chamar a ferramenta CUP -->
+    <!-- Task to call the tool CUP -->
     <taskdef name="cup" classname="java_cup.anttask.CUPTask"
              classpath="${tools}/java-cup-11b.jar" />
-    <!-- Alvo: init -->
+    <!-- Target: init -->
     <target name="init">
-        <!-- Criar um diretório para armazenar as classes compiladas -->
+        <!-- Creates a directory to store the compiled classes -->
         <mkdir dir="${build}" />
     </target>
-    <!-- Alvo: genscanner -->
-    <target name="genscanner" depends="init" description="gera o scanner">
+    <!-- Target: genscanner -->
+    <target name="genscanner" depends="init" description="generates scanner">
         <!-- Executa o JFlex -->
         <jflex file="${jflex}/Scanner.jflex"
                 destdir="${src}" />
     </target>
-    <!-- Alvo: genparser -->
-    <target name="genparser" depends="init" description="gera o parser">
-        <!-- Executa o CUP -->
+    <!-- Target: genparser -->
+    <target name="genparser" depends="init" description="generates parser">
+        <!-- Executes CUP -->
         <cup srcfile="${cup}/Parser.cup" destdir="${src}" parser="Parser"
              interface="true" locations="false" />
     </target>
-    <!-- Alvo: compile -->
-    <target name="compile" depends="genscanner,genparser" description="compila os fontes">
-        <!-- Compila todos os códigos Java -->
+    <!-- Target: compile -->
+    <target name="compile" depends="genscanner,genparser" description="compile sources">
+        <!-- Compiles all java codes -->
         <javac srcdir="${src}" destdir="${build}"
                classpath="${tools}/java-cup-11b.jar" debug="true"/>
     </target>
-    <!-- Alvo dist - cria o produto final, que pode ser redistribuído -->
-    <target name="dist" depends="compile" description="cria uma distribuição">
-        <!-- Cria o diretório de distribuição -->
+    <!-- Target dist - creates the final product, that can be distributed -->
+    <target name="dist" depends="compile" description="creates a distribution">
+        <!-- Creates the distribution directory -->
         <mkdir dir="${dist}" />
-        <!-- Empacota o programa em um arquivo JAR -->
+        <!-- Packs the program in a JAR file -->
         <jar jarfile="${dist}/simple_expr.jar"
              basedir="${build}">
             <manifest>
                 <attribute name="Main-Class" value="${mainClass}" />
             </manifest>
-            <!-- É necessário adicionar as bibliotecas do CUP!!! -->
+            <!-- It is necessary to add the CUP libraries!!! -->
             <zipgroupfileset dir="${tools}" includes="java-cup-11b.jar" />
         </jar>
     </target>
-    <!-- Alvo jar - o mesmo que dist -->
-    <target name="jar" depends="dist" description="cria uma distribuição">
+    <!-- Target jar - the same as dist -->
+    <target name="jar" depends="dist" description="creates a distribution">
     </target>
-    <!-- Alvo run - executa o código com arquivo de teste -->
-    <target name="run" depends="dist" description="executa e testa o projeto">
+    <!-- Target run - executes the code with a test file -->
+    <target name="run" depends="dist" description="executes and tests the project">
         <java classname="${mainClass}" classpath="${dist}/simple_expr.jar" fork="true">
-            <arg value="teste.input"/>
+            <arg value="test.input"/>
         </java>
     </target>
-    <!-- Alvo clean - limpa os arquivos gerados -->
-    <target name="clean" description="limpar arquivos gerados">
+    <!-- Target clean - cleans the generated files -->
+    <target name="clean" description="cleans generated files">
         <delete dir="${build}" />
         <delete dir="${dist}" />
         <delete>
