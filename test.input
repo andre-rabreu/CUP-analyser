@@ -1,15 +1,30 @@
-x = 5;
-y = 2;
+print(1.0);
+print("Oi");
+print(2 + 3);
+print(2 + " + " + 3 + " = " + (2+3));
 
-if(x > y) {
-    print(x + " maior que " + y);
-}
-else {
-    print(x + " menor que " + y);
-}
+if("Abacaxi" > "Abacate")
+    print("sim");
+else
+    print("nao");
 
-while(x >= y) {
-    print("x: " + x);
-    x = x - 1;
+print(PI);
+print(7 - 2 + 3);
+print(7/2 - 2*2 + 3);
+print(7%2 - 2*2 + 3);
+print(7%2 - -2*2 + 3);
+print(9 ** 2);
+
+x = 10;
+print(x);
+
+while(x>0) {
+    {
+        z = "oi";
+        print(z + " " + x);
+    }
+    print("Valor de x: " + x);
+    y = 2*x+1;
+    print("Valor de y: " + y);
+    x = x -1;
 }
-print("Pi = " + PI);
